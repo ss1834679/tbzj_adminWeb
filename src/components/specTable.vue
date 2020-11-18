@@ -49,7 +49,13 @@ export default {
   },
   beforeMount() {
     this.tagData = this.arrData;
-    console.log(this.tagData);
+  },
+  watch: {
+    arrData: {
+      handler() {
+        this.tagData = this.arrData;
+      }
+    }
   },
   //   beforeUpdate() {
   //     this.tagData = this.arrData;
@@ -59,7 +65,7 @@ export default {
     /* 规格tags的函数 */
     handleClose(tag) {
       let idx;
-      this.tagData.map((item, i) => {
+      this.tagData.forEach((item, i) => {
         if (item.specParamName == tag) {
           idx = i;
         }

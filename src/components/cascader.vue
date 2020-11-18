@@ -46,7 +46,6 @@ export default {
           arr[i] = "";
         }
       }
-      console.log(arr.join(","));
       this.$emit("getCategoryId", arr.join(","));
     }
   }

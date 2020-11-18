@@ -1,13 +1,7 @@
 <template v-if="showTag">
   <!-- 添加规格，添加标签组件 -->
   <div>
-    <el-tag
-      :key="tag"
-      v-for="tag in tagData"
-      closable
-      :disable-transitions="false"
-      @close="handleClose(tag)"
-    >{{tag}}</el-tag>
+    <el-tag :key="index" v-for="(tag,index) in tagData" closable :disable-transitions="false" @close="handleClose(tag)">{{tag}}</el-tag>
     <el-input
       class="input-new-tag"
       v-if="inputVisible"
@@ -17,7 +11,7 @@
       @keyup.enter.native="handleInputConfirm"
       @blur="handleInputConfirm"
     ></el-input>
-    <el-button v-else class="button-new-tag" size="small" @click="showInput">添加新规格</el-button>
+    <el-button v-else class="button-new-tag" size="small" @click="showInput">{{text==undefined?'添加新规格':text}}</el-button>
   </div>
 </template>
 
@@ -25,7 +19,10 @@
 export default {
   name: "tagAdd",
   props: {
-    arrData: { required: true }
+    tableindex: { required: false },
+    domref: { required: false },
+    arrData: { required: true },
+    text: { required: false }
   },
   data() {
     return {
@@ -34,15 +31,23 @@ export default {
       inputValue: ""
     };
   },
-  beforeMount() {
-    this.tagData = this.arrData;
+  watch: {
+    arrData: {
+      handler() {
+        this.tagData = this.arrData;
+      },
+      deep: true
+    }
   },
-  beforeUpdate() {
+  mounted() {
     this.tagData = this.arrData;
   },
   methods: {
     /* 规格tags的函数 */
     handleClose(tag) {
+      if (this.domref) {
+        this.domref && this.$emit("delete", { tableindex: this.tableindex, oValue: tag, len: this.tagData.length });
+      }
       this.tagData.splice(this.tagData.indexOf(tag), 1);
       this.$emit("getArrData", this.tagData);
     },
@@ -55,13 +60,21 @@ export default {
     },
 
     handleInputConfirm() {
-      let inputValue = this.inputValue;
-      if (inputValue) {
-        this.tagData.push(inputValue);
+      if (this.inputValue != "") {
+        if (this.tagData.indexOf(this.inputValue) == -1) {
+          let inputValue = this.inputValue;
+          if (inputValue) {
+            this.tagData.push(inputValue);
+          }
+          this.inputVisible = false;
+          this.inputValue = "";
+          this.$emit("getArrData", this.tagData);
+          this.domref &&
+            this.$emit("add", { tableindex: this.tableindex, oValue: inputValue, len: this.tagData.length - 1 });
+        } else {
+          this.$message.warning("该项已存在");
+        }
       }
-      this.inputVisible = false;
-      this.inputValue = "";
-      this.$emit("getArrData", this.tagData);
     }
   }
 };

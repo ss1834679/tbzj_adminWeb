@@ -1,17 +1,22 @@
-import ajax from '../utils/ajax'
-import server from '../utils/request'
+import server from '../utils/server'
 
-const BASE = 'http://localhost:3000/api'
-
-export const getLogin = (data) => ajax(BASE + '/getlogin', data, 'POST');
-
-export const getInfo = (data) => ajax(BASE + '/getinfo', data, 'GET');
-
-// export const getallinfo = (data) => ajax(BASE + '/getinfo', data, 'post');
-export function getallinfo(obj) {
+/**
+ * 登录接口
+ * @param {*} obj 登录的信息
+ */
+export function getLogin(obj) {
     return server({
-        url: '/api/getallinfo',
-        method: 'post',
-        data: obj
+        url: '/shiro/login',
+        method: "post",
+        params: obj
+    })
+}
+/**
+ * 退出登录
+ */
+export function getLogOut() {
+    return server({
+        url: "/shiro/logout",
+        method: "get"
     })
 }

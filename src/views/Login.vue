@@ -5,16 +5,11 @@
         <el-col :xs="24" :sm="16" :md="12" :lg="8" class="content">
           <div class="logo_title">
             <img src="../../public/img/logo-signin.png" alt />
-            <p>涂帮之家后台管理</p>
+            <p>涂邦之家后台管理</p>
           </div>
           <el-form :model="userinfo" status-icon :rules="rules" ref="userinfo">
             <el-form-item label="用户名">
-              <el-input
-                type="text"
-                v-model="userinfo.username"
-                autocomplete="off"
-                placeholder="请输入用户名"
-              ></el-input>
+              <el-input type="text" v-model="userinfo.username" autocomplete="off" placeholder="请输入用户名"></el-input>
             </el-form-item>
             <el-form-item label="密码">
               <el-input
@@ -27,7 +22,7 @@
             </el-form-item>
             <el-form-item class="forget">
               <div>
-                <el-switch v-model="delivery"></el-switch>
+                <el-switch disabled v-model="userinfo.rememberMe"></el-switch>
                 <span>7天内自动登录?</span>
               </div>
               <div>
@@ -47,14 +42,15 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { getLogin } from "../api/log";
 export default {
   data() {
     return {
       delivery: false,
       userinfo: {
         username: "",
-        password: ""
+        password: "",
+        rememberMe: false
       },
       rules: {
         username: [
@@ -68,26 +64,22 @@ export default {
       }
     };
   },
+  mounted() {
+    this.$route.query.type == "reLogin" && this.$message.error("请重新登录");
+  },
   methods: {
-    ...mapActions(["getlogin"]),
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          // const loading = this.$loading({
-          //   lock: true,
-          //   text: "Loading",
-          //   spinner: "el-icon-loading",
-          //   background: "rgba(0, 0, 0, 0.7)"
-          // });
-          this.getlogin({
-            obj: this.userinfo,
-            callback1: () => {
-              // loading.close();
-              this.$router.replace("/");
-            },
-            callback2: (text) => {
-              // loading.close();
-              this.$message.error(text);
+          getLogin(this.userinfo).then(data => {
+            if (data.data.status == 200) {
+              localStorage.setItem("reqHeaders", data.data.content.Authorization);
+              localStorage.setItem("loginState", "true");
+              this.$route.query.type == "reLogin" && window.close();
+              this.$router.push("/");
+              this.$message({ message: "登录成功", type: "success" });
+            } else {
+              this.$message.error(data.data.msg);
             }
           });
         } else {

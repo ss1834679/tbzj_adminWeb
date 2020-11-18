@@ -1,18 +1,20 @@
-import server from '../utils/request'
+import server from '../utils/server'
 
 export function addBrand(obj) {
   return server({
-    url: '/admin/brand/add',
+    url: '/brand/add',
     method: 'post',
-    params: obj,
+    data: obj,
   })
 }
 
 export function getBrandList(obj) {
   /* 默认的每页数量 */
-  obj['pageSize'] = 20
+  if (obj['pageSize'] == undefined) {
+    obj['pageSize'] = 20
+  }
   return server({
-    url: '/admin/brand/list',
+    url: '/brand/list',
     method: 'get',
     params: obj,
   })
@@ -20,7 +22,7 @@ export function getBrandList(obj) {
 
 export function getBrand(obj) {
   return server({
-    url: '/admin/brand/get',
+    url: '/brand/get',
     method: 'get',
     params: obj,
   })
@@ -28,8 +30,16 @@ export function getBrand(obj) {
 
 export function updateBrand(obj) {
   return server({
-    url: '/admin/brand/update',
-    method: 'put',
+    url: '/brand/update',
+    method: 'post',
     data: obj,
+  })
+}
+
+export function deleteBrand(obj) {
+  return server({
+    url: '/brand/delete',
+    method: "delete",
+    params: obj
   })
 }

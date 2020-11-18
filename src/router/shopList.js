@@ -16,7 +16,7 @@ export default {
         meta: {
             title: '店铺管理'
         },
-        component: () => import( /* webpackChunkName: "index" */ '../views/shop/comIndex.vue'),
+        component: () => import( /* webpackChunkName: "index" */ '../views/comIndex.vue'),
         children: [{
             path: 'index',
             name: 'supplier_Idx',
@@ -47,7 +47,7 @@ export default {
         meta: {
             title: '文章管理'
         },
-        component: () => import( /* webpackChunkName: "article" */ '../views/shop/comIndex.vue'),
+        component: () => import( /* webpackChunkName: "article" */ '../views/comIndex.vue'),
         children: [{
             path: 'index',
             name: 'article_Idx',
@@ -78,7 +78,7 @@ export default {
         meta: {
             title: '商品列表'
         },
-        component: () => import( /* webpackChunkName: "goods" */ '../views/shop/comIndex.vue'),
+        component: () => import( /* webpackChunkName: "goods" */ '../views/comIndex.vue'),
         children: [{
             path: 'index',
             name: 'goods_Idx',
@@ -109,7 +109,7 @@ export default {
         meta: {
             title: '订单管理'
         },
-        component: () => import( /* webpackChunkName: "order" */ '../views/shop/comIndex.vue'),
+        component: () => import( /* webpackChunkName: "order" */ '../views/comIndex.vue'),
         children: [{
             path: 'index',
             name: 'order_Idx',
@@ -133,7 +133,7 @@ export default {
         meta: {
             title: '分类列表'
         },
-        component: () => import( /* webpackChunkName: "category" */ '../views/shop/comIndex.vue'),
+        component: () => import( /* webpackChunkName: "category" */ '../views/comIndex.vue'),
         children: [{
             path: 'index',
             name: 'category_Idx',
@@ -164,7 +164,7 @@ export default {
         meta: {
             title: '品牌列表'
         },
-        component: () => import( /* webpackChunkName: "brand" */ '../views/shop/comIndex.vue'),
+        component: () => import( /* webpackChunkName: "brand" */ '../views/comIndex.vue'),
         children: [{
             path: 'index',
             name: 'brand_Idx',
@@ -195,7 +195,7 @@ export default {
         meta: {
             title: '优惠券列表'
         },
-        component: () => import( /* webpackChunkName: "coupon" */ '../views/shop/comIndex.vue'),
+        component: () => import( /* webpackChunkName: "coupon" */ '../views/comIndex.vue'),
         children: [{
             path: 'index',
             name: 'coupon_Idx',
@@ -234,7 +234,7 @@ export default {
         meta: {
             title: '用户列表'
         },
-        component: () => import( /* webpackChunkName: "user" */ '../views/shop/comIndex.vue'),
+        component: () => import( /* webpackChunkName: "user" */ '../views/comIndex.vue'),
         children: [{
             path: 'index',
             name: 'user_Idx',
